@@ -8,8 +8,11 @@
 import UIKit
 import MapKit
 
+
 class ViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet var mapView: MKMapView!
+    var websites = ["en.wikipedia.org/wiki/London", "en.wikipedia.org/wiki/Oslo", "en.wikipedia.org/wiki/Paris", "en.wikipedia.org/wiki/Rome", "en.wikipedia.org/wiki/Washington,_D.C."]
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,12 +83,19 @@ class ViewController: UIViewController, MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let capital = view.annotation as? Capital else { return }
-        let placeName = capital.title
-        let placeInfo = capital.info
+//        let placeName = capital.title
+//        let placeInfo = capital.info
 
-        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK", style: .default))
-        present(ac, animated: true)
+//        let ac = UIAlertController(title: placeName, message: placeInfo, preferredStyle: .alert)
+//        ac.addAction(UIAlertAction(title: "OK", style: .default))
+//        present(ac, animated: true)
+        
+        if let vc = storyboard?.instantiateViewController(withIdentifier: "Webview") as? WebViewController {
+            
+            vc.website = websites[0]
+            vc.capital = capital.title ?? ""
+            navigationController?.pushViewController(vc, animated: true)
+        }
     }
 
 
